@@ -18,7 +18,7 @@ namespace TestFuncs
         }
 
         [Function("Function1")]
-        public HttpResponseData Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
+        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestData req)
         {
             using var act = test.StartActivity("THIS IS A TEST");
             _logger.LogInformation("C# HTTP trigger function processed a request.");
@@ -26,7 +26,7 @@ namespace TestFuncs
             var response = req.CreateResponse(HttpStatusCode.OK);
             response.Headers.Add("Content-Type", "text/plain; charset=utf-8");
 
-            response.WriteString("Welcome to Azure Functions!");
+            await response.WriteStringAsync("Welcome to Azure Functions!");
 
             return response;
         }
